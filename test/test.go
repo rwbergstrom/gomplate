@@ -2,6 +2,7 @@ package test
 
 import (
 	"github.com/pkg/errors"
+	"reflect"
 )
 
 // Assert -
@@ -21,4 +22,16 @@ func Fail(message string) error {
 		return errors.Errorf("template generation failed: %s", message)
 	}
 	return errors.New("template generation failed")
+}
+
+// Required -
+func Required(message string, value interface{}) (interface{}, error) {
+	if message == "" {
+		message = "can not render template: a required value not was not set"
+	}
+
+	if value == nil || reflect.DeepEqual(value, reflect.Zero(reflect.TypeOf(value)).Interface()) {
+		return nil, errors.New(message)
+	}
+	return value, nil
 }
