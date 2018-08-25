@@ -57,6 +57,9 @@ func (t *tplate) addTarget() (err error) {
 // gatherTemplates - gather and prepare input template(s) and output file(s) for rendering
 func gatherTemplates(o *Config) (templates []*tplate, err error) {
 	mode, modeOverride, err := o.getMode()
+	if err != nil {
+		return nil, err
+	}
 
 	// the arg-provided input string gets a special name
 	if o.Input != "" {
